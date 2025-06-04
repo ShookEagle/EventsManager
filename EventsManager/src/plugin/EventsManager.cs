@@ -40,6 +40,8 @@ public class EventsManager : BasePlugin, IEventsManager
         _webService = new WebService(new HttpClient(), this);
         _mapGroupService = new MapGroupService(_webService, this);
         _gameModesService = new GameModesService(this);
+
+        await _mapGroupService.LoadAsync();
         
         LoadCommands();
     }
