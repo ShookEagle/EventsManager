@@ -12,5 +12,5 @@ public interface IEventsManager : IPluginConfig<EventsManagerConfig>
     IWebService GetWebService();
     IMapGroupService GetMapGroupService();
     ICommandPackService GetCommandPackService();
-    IGameModesService GetGameModesService();
+    IGameModeService GetGameModesService();
 }
