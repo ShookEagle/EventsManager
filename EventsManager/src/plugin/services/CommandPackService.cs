@@ -31,6 +31,23 @@ public class CommandPackService(IWebService api, EventsManager plugin) : IComman
             Server.ExecuteCommand(cmd);
         return ActivePacks.Add(name);
     }
+    
+    public void EnableMany(IEnumerable<string> packNames)
+    {
+        foreach (var name in packNames)
+            Enable(name);
+    }
+    
+    public void EnableOnly(IEnumerable<string> newActive)
+    {
+        var newSet = new HashSet<string>(newActive);
+
+        foreach (var name in ActivePacks.Except(newSet))
+            Disable(name);
+
+        foreach (var name in newSet.Except(ActivePacks))
+            Enable(name);
+    }
 
     public bool Disable(string name)
     {
