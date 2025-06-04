@@ -1,0 +1,15 @@
+using CounterStrikeSharp.API.Core;
+using EventsManager.api.plugin.services;
+using EventsManager.plugin;
+using MAULActainShared.plugin;
+
+namespace EventsManager.api.plugin;
+
+public interface IEventsManager : IPluginConfig<EventsManagerConfig>
+{
+    BasePlugin GetBase();
+    IActain GetActain();
+    IWebService GetWebService();
+    IMapGroupService GetMapGroupService();
+    IGameModesService GetGameModesService();
+}

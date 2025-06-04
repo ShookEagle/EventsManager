@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="config\" />
+      <Folder Include="src\extensions\" />
+      <Folder Include="src\plugin\enums\" />
+      <Folder Include="src\plugin\extensions\" />
+      <Folder Include="src\plugin\listeners\" />
+      <Folder Include="src\plugin\utils\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CounterStrikeSharp.API" Version="1.0.318" />
+        <Reference Include="MAULActainShared.dll">
+            <HintPath>./shared/MAULActainShared.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    
+</Project>
