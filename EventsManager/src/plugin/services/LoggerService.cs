@@ -1,3 +1,4 @@
+using CounterStrikeSharp.API.Core;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.enums;
@@ -5,14 +6,14 @@ using EventsManager.plugin.models;
 
 namespace EventsManager.plugin.services;
 
-public class LoggerService(IEventsManager plugin)
+public class LoggerService(IEventsManager plugin) : ILoggerService
 {
     private readonly IWebService _api = plugin.GetWebService();
     
     private readonly List<LogEntry> _logBuffer = [];
     private const int MaxBufferSize = 200;
     
-    public void Log(string message, LogType type = LogType.INFO, Dictionary<string, object>? meta = null)
+    private void Log(string message, LogType type = LogType.INFO, Dictionary<string, object>? meta = null)
     {
         var entry = new LogEntry
         {
@@ -28,4 +29,8 @@ public class LoggerService(IEventsManager plugin)
     public void Warn(string message, Dictionary<string, object>? meta = null) => Log(message, LogType.WARN, meta);
     public void Error(string message, Dictionary<string, object>? meta = null) => Log(message, LogType.ERROR, meta);
     public void Action(string message, Dictionary<string, object>? meta = null) => Log(message, LogType.ACTION, meta);
+    public void Mode(CCSPlayerController executor, string mode, Dictionary<string, object>? meta = null) =>
+    Log($"{executor.PlayerName} changed the mode to {mode}", LogType.ACTION, meta); 
+    public void Map(CCSPlayerController executor, string map, Dictionary<string, object>? meta = null) =>
+        Log($"{executor.PlayerName} changed the map to {map}", LogType.ACTION, meta); 
 }
