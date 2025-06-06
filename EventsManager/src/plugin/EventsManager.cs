@@ -49,11 +49,11 @@ public class EventsManager : BasePlugin, IEventsManager
         _announcerService   = new AnnouncerService(this);
         _loggerService      = new LoggerService(this);
 
+        LoadCommands();
+        
         await _mapGroupService.LoadAsync();
         await _commandPackService.LoadAsync();
         await _gameModesService.LoadAsync();
-        
-        LoadCommands();
     }
     
     private void LoadCommands()
