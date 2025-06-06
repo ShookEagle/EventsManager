@@ -37,8 +37,6 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
         ActiveModeName = name;
         ApplyGameMode(Get(ActiveModeName));
         
-        //TODO: Announce Change and Log
-        
         return true;
     }
 

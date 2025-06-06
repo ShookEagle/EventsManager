@@ -25,6 +25,7 @@ public class EventsManager : BasePlugin, IEventsManager
     private IMapGroupService? _mapGroupService;
     private ICommandPackService? _commandPackService;
     private IGameModeService? _gameModesService;
+    private IAnnouncerService _announcerService;
 
 #pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     public EventsManagerConfig? Config { get; set; }
@@ -37,6 +38,8 @@ public class EventsManager : BasePlugin, IEventsManager
     public IMapGroupService GetMapGroupService() { return _mapGroupService!; }
     public ICommandPackService GetCommandPackService() { return _commandPackService!; }
     public IGameModeService GetGameModesService() { return _gameModesService!; }
+
+    public IAnnouncerService GetAnnouncerService() { return _announcerService!; }
     
     public override async void Load(bool hotReload)
     {
@@ -44,6 +47,7 @@ public class EventsManager : BasePlugin, IEventsManager
         _mapGroupService = new MapGroupService(_webService, this);
         _commandPackService = new CommandPackService(_webService, this);
         _gameModesService = new GameModeService(_webService, this);
+        _announcerService = new AnnouncerService(this);
 
         await _mapGroupService.LoadAsync();
         await _commandPackService.LoadAsync();
