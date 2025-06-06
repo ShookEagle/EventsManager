@@ -1,6 +1,7 @@
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Modules.Admin;
 using EventsManager.plugin.utils;
+using MAULActainShared.maul.enums;
 using Microsoft.Extensions.Localization;
 
 namespace EventsManager.plugin.extensions;
@@ -27,8 +28,33 @@ public static class PlayerExtensions
 
         return true;
     }
+    
+    public static MaulPermission GetRank(this CCSPlayerController player) {
+        if (!player.IsReal()) return MaulPermission.None;
+        if (AdminManager.PlayerInGroup(player, "#ego/root")
+            || AdminManager.PlayerHasPermissions(player, "@css/root"))
+            return MaulPermission.Root;
+        if (AdminManager.PlayerInGroup(player, "#ego/executive"))
+            return MaulPermission.Executive;
+        if (AdminManager.PlayerInGroup(player, "#ego/directory"))
+            return MaulPermission.Director;
+        if (AdminManager.PlayerInGroup(player, "#ego/commgr"))
+            return MaulPermission.CommunityManager;
+        if (AdminManager.PlayerInGroup(player, "#ego/srmanager"))
+            return MaulPermission.SeniorManager;
+        if (AdminManager.PlayerInGroup(player, "#ego/manager"))
+            return MaulPermission.Manager;
+        if (AdminManager.PlayerInGroup(player, "#ego/advisor"))
+            return MaulPermission.Advisor;
+        if (AdminManager.PlayerInGroup(player, "#ego/ego"))
+            return MaulPermission.EGO;
+        if (AdminManager.PlayerInGroup(player, "#ego/eg")) return MaulPermission.EG;
+        if (AdminManager.PlayerInGroup(player, "#ego/e")) return MaulPermission.E;
+        return MaulPermission.None;
+    }
+
 
     public static bool IsEC(this CCSPlayerController player)
-    { return player.IsReal() && AdminManager.PlayerHasPermissions(player, "#ego/manager"); }
+    { return player.IsReal() && player.GetRank() >= MaulPermission.Manager; }
 
 }

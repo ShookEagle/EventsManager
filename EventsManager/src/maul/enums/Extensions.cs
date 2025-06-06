@@ -1,3 +1,5 @@
+using MAULActainShared.maul.enums;
+
 namespace EventsManager.maul.enums;
 
 public static class Extensions
