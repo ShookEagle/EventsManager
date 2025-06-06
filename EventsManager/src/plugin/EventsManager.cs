@@ -58,6 +58,8 @@ public class EventsManager : BasePlugin, IEventsManager
     
     private void LoadCommands()
     {
+        _commands.Add("css_logs", new LogsCmd(this));
+        
         foreach (var command in _commands)
             AddCommand(command.Key, command.Value.Description ?? "No Description Provided", command.Value.OnCommand);
     }
