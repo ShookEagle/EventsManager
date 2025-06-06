@@ -8,12 +8,10 @@ namespace EventsManager.plugin.services;
 public class WebService : IWebService
 {
     private readonly HttpClient _http;
-    private readonly IEventsManager plugin;
+    private readonly JsonSerializerOptions _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     
     public WebService(HttpClient httpClient, IEventsManager plugin)
     {
-        this.plugin = plugin;
-        var settings = plugin.Config;
         _http = httpClient;
         _http.BaseAddress = new Uri($"{plugin.Config.WebServerUrl}:{plugin.Config.WebServerPort}/api/");
     }
@@ -25,11 +23,10 @@ public class WebService : IWebService
             var response = await _http.GetAsync(endpoint);
             if (!response.IsSuccessStatusCode) return default;
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonSerializer.Deserialize<T>(json, _options);
         }
         catch { return default; }
     }
-
     public async Task<bool> PostAsync<T>(string endpoint, T data)
     {
         try
