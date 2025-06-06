@@ -1,3 +1,4 @@
+using System.Text.Json;
 using CounterStrikeSharp.API;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
@@ -26,6 +27,7 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
         if (!GameModes.ContainsKey(ActiveModeName))
             ActiveModeName = GameModes.Keys.FirstOrDefault() ?? "Default";
         
+        plugin.Logger.LogInformation($"[GameModes] Successfully loaded {modes.Count} Game Modes.");
         return true;
     }
     
@@ -58,7 +60,8 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
         _mapGroupService.SetActiveGroup(mode.MapGroup);
 
         // 2. Apply Command Packs
-        _commandPackService.EnableOnly(mode.CommandPacks);
+        if (mode.CommandPacks != null)
+            _commandPackService.EnableOnly(mode.CommandPacks!);
         
         // 3. Apply Mode Specific Commands
         var commands = FlattenSettings(mode.Settings);
@@ -66,12 +69,13 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
             Server.ExecuteCommand(cmd);
         
         if (mode.Settings.CustomCommands != null)
-            foreach (var cmd in mode.Settings.CustomCommands)
+            foreach (var cmd in mode.Settings.CustomCommands.OfType<string>())
                 Server.ExecuteCommand(cmd);
         
         // 4. Load Plugins 
-        foreach (var path in mode.Plugins)
-            Server.ExecuteCommand($"css_plugins load \"plugins/disabled/{path}\"");
+        if (mode.Plugins != null)
+            foreach (var path in mode.Plugins)
+                Server.ExecuteCommand($"css_plugins load \"plugins/disabled/{path}\"");
     }
     
     private static List<string> FlattenSettings(GameModeSettings? settings)
@@ -89,7 +93,7 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
 
         return result;
 
-        void Merge(Dictionary<string, object>? section)
+        void Merge(Dictionary<string, object?>? section)
         {
             if (section == null) return;
             foreach (var (key, value) in section)

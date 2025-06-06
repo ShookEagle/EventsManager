@@ -19,6 +19,7 @@ public class MapGroupService(IWebService api, BasePlugin plugin) : IMapGroupServ
         if (!MapGroups.ContainsKey(ActiveGroup))
             ActiveGroup = MapGroups.Keys.FirstOrDefault() ?? "Active"; //always fallback to `Active`
 
+        plugin.Logger.LogInformation($"[MapGroups] Successfully loaded {groups.Count} Map Groups.");
         return true;
     }
 

@@ -21,6 +21,7 @@ public class CommandPackService(IWebService api, EventsManager plugin) : IComman
         }
 
         CommandPacks = packs;
+        plugin.Logger.LogInformation($"[CommandPacks] Successfully loaded {packs.Count} Command Packs.");
         return true;
     }
     
