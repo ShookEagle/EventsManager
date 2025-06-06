@@ -8,11 +8,8 @@
 
     <ItemGroup>
       <Folder Include="config\" />
-      <Folder Include="src\extensions\" />
       <Folder Include="src\plugin\enums\" />
-      <Folder Include="src\plugin\extensions\" />
       <Folder Include="src\plugin\listeners\" />
-      <Folder Include="src\plugin\utils\" />
     </ItemGroup>
 
     <ItemGroup>
