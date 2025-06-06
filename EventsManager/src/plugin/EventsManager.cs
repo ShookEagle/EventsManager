@@ -13,7 +13,7 @@ namespace EventsManager.plugin;
 
 public class EventsManager : BasePlugin, IEventsManager
 {
-    public override string ModuleName => "EventManager";
+    public override string ModuleName => "EventsManager";
     public override string ModuleVersion => "1.0.0";
     public override string ModuleAuthor => "ShookEagle";
     public override string ModuleDescription => "eGO Event Server Plugin hooked with Web Panel";
@@ -47,6 +47,7 @@ public class EventsManager : BasePlugin, IEventsManager
 
         await _mapGroupService.LoadAsync();
         await _commandPackService.LoadAsync();
+        await _gameModesService.LoadAsync();
         
         LoadCommands();
     }

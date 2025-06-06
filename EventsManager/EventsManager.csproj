@@ -20,6 +20,13 @@
         <Reference Include="MAULActainShared.dll">
             <HintPath>./shared/MAULActainShared.dll</HintPath>
         </Reference>
+        <Reference Include="RMenu.dll">
+            <HintPath>./shared/RMenu.dll</HintPath>
+        </Reference>
     </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="D:\devserver\game\csgo\addons\counterstrikesharp\plugins\EventsManager\" />
+    </Target>
     
 </Project>
