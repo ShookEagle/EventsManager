@@ -6,7 +6,7 @@ using RMenu.Enums;
 
 namespace EventsManager.plugin.menus;
 
-public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBase(player, new MenuValue("EC Menu", Color.Blue))
+public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBase(player, [new MenuValue("EC Menu", Color.Blue)])
 {
     protected override void Build()
     {
