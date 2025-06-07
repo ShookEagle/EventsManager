@@ -1,6 +1,3 @@
-using System.Collections;
-using System.ComponentModel;
-using System.Drawing;
 using CounterStrikeSharp.API.Core;
 using EventsManager.plugin.menus.components;
 using RMenu;
