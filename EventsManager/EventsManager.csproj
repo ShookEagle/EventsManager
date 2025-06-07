@@ -9,7 +9,6 @@
     <ItemGroup>
       <Folder Include="config\" />
       <Folder Include="src\plugin\listeners\" />
-      <Folder Include="src\plugin\menus\components\" />
     </ItemGroup>
 
     <ItemGroup>
