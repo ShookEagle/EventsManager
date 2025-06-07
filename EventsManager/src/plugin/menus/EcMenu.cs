@@ -15,4 +15,9 @@ public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBa
         Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue("Settings")));
         Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue("Tools")));
     }
+
+    protected override void OnAction(CCSPlayerController player, MenuBase menu, MenuAction action)
+    {
+        
+    }
 }
