@@ -20,7 +20,7 @@ public static class Elements
     public static readonly MenuValue[] Footer =
     {
         new("Scroll - ",    Theme.PlaceholderText),
-        new("W/S ",         Theme.AccentBlue),
+        new("WASD ",         Theme.AccentBlue),
         new("| Select - ",  Theme.PlaceholderText),
         new("Jump ",        Theme.AccentGreen),
         new("| Back - ",    Theme.PlaceholderText),
