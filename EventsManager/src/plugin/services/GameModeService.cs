@@ -11,8 +11,8 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
 {
     private readonly IMapGroupService _mapGroupService = plugin.GetMapGroupService();
     private readonly ICommandPackService _commandPackService = plugin.GetCommandPackService();
-    public Dictionary<string, GameMode> GameModes { get; private set; } = new();
-    public string ActiveModeName { get; private set; } = "Default";
+    private Dictionary<string, GameMode> GameModes { get; set; } = new();
+    public string ActiveModeName { get; set; } = "Default";
 
     public async Task<bool> LoadAsync()
     {
@@ -43,8 +43,12 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
     public GameMode? GetActiveMode() =>
         GameModes.TryGetValue(ActiveModeName, out var mode) ? mode : null;
 
+    public string GetActiveString() => ActiveModeName;
+
     public GameMode? Get(string name) =>
         GameModes.TryGetValue(name, out var mode) ? mode : null;
+
+    public List<string>? GetAll() => GameModes.Keys.ToList();
 
     private void ApplyGameMode(GameMode? mode)
     {

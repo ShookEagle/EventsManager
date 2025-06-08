@@ -1,4 +1,5 @@
 using CounterStrikeSharp.API.Core;
+using EventsManager.api.plugin;
 using EventsManager.plugin.menus.components;
 using RMenu;
 using RMenu.Enums;
@@ -12,7 +13,7 @@ public abstract class RMenuBase
     public MenuBase RawMenu => Menu;
     private MenuBase? Parent { get; }
 
-    protected RMenuBase(CCSPlayerController player, MenuValue[] header, MenuBase? parent = null)
+    protected RMenuBase(IEventsManager plugin, CCSPlayerController player, MenuValue[] header, MenuBase? parent = null)
     {
         Player = player;
         Parent = parent;
@@ -29,13 +30,15 @@ public abstract class RMenuBase
         };
 
         Menu = new MenuBase(header: header,footer: Elements.Footer, options: options);
-        
-        // ReSharper disable once VirtualMemberCallInConstructor
-        Build();
     }
     
     protected abstract void Build();
-    public void Show() => RMenu.Menu.Add(Player, Menu, OnAction); 
+    public void Show()
+    {
+        Build();
+        RMenu.Menu.Add(Player, Menu, OnAction);
+    }
+
     protected abstract void OnAction(CCSPlayerController player, MenuBase menu, MenuAction action);
 
     protected void GoBack()
