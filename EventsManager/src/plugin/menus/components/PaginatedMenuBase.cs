@@ -24,9 +24,17 @@ public abstract class PaginatedMenuBase(
         _currentPage = 1;
     }
 
-    private void Update()
+    private void UpdateItems()
     {
-        
+        var start = (_currentPage - 1) * PageSize;
+        var end = Math.Min(start + PageSize, Items.Count);
+
+        for (var i = start; i < end; i++)
+            Menu.Items[i - start] = CreateMenuItem(Items[i]);
+
+        //Pad with blanks if not enough items
+        for (var i = end; i < start + PageSize; i++)
+            Menu.Items[i - start] = Theme.BlankItem;
     }
 
     protected override void OnAction(CCSPlayerController player, MenuBase menu, MenuAction action)
@@ -39,7 +47,7 @@ public abstract class PaginatedMenuBase(
             var pageData = menu.SelectedItem?.Item?.SelectedValue?.Value?.Data;
             if (pageData is not int page || page <= 0 || page > TotalPages) return;
             _currentPage = page;
-            Build();
+            UpdateItems();
             return;
         }
 
@@ -52,13 +60,7 @@ public abstract class PaginatedMenuBase(
 
     protected override void Build()
     {
-        Menu.Items.Clear();
-
-        var start = (_currentPage - 1) * PageSize;
-        var end = Math.Min(start + PageSize, Items.Count);
-
-        for (var i = start; i < end; i++)
-            Menu.AddItem(CreateMenuItem(Items[i]));
+        for (var i = 0; i < PageSize; i++) Menu.AddItem(Theme.BlankItem);
 
         // Add pagination control at the end
         var pages = new List<MenuValue>();
@@ -66,9 +68,7 @@ public abstract class PaginatedMenuBase(
             pages.Add(new MenuValue($"{i}", data: i));
 
         var pageChoice = new MenuItem(MenuItemType.Choice, "Page: ", pages)
-        {
-            SelectedValue = (_currentPage - 1, pages[_currentPage - 1])
-        };
+        { SelectedValue = (_currentPage - 1, pages[_currentPage - 1]) };
 
         Menu.AddItem(pageChoice);
     }

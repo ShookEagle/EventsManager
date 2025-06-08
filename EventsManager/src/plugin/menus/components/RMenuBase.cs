@@ -22,6 +22,7 @@ public abstract class RMenuBase
         {
             DisplayItemsInHeader = true,
             BlockMovement = true,
+            BlockJump = true,
             HeaderFontSize = MenuFontSize.M,
             ItemFontSize = MenuFontSize.M,
             FooterFontSize = MenuFontSize.S,
