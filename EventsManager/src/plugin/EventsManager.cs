@@ -20,10 +20,12 @@ public class EventsManager : BasePlugin, IEventsManager
     private readonly Dictionary<string, Command> _commands = new();
 
     private IWebService? _webService;
+#pragma warning disable CA1859
     private IMapGroupService? _mapGroupService;
     private ICommandPackService? _commandPackService;
     private IGameModeService? _gameModesService;
     private IServerStateService? _serverStateService;
+#pragma warning restore CA1859
     private IAnnouncerService? _announcerService;
     private ILoggerService? _loggerService;
 
