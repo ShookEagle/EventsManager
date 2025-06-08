@@ -32,7 +32,7 @@ public class LoggerService(IEventsManager plugin) : ILoggerService
     public void Error(string message, Dictionary<string, object>? meta = null) => Log(message, LogType.ERROR, meta);
     public void Action(string message, Dictionary<string, object>? meta = null) => Log(message, LogType.ACTION, meta);
     public void Mode(CCSPlayerController executor, string mode, Dictionary<string, object>? meta = null) =>
-    Log($"{executor.PlayerName} changed the mode to {mode}", LogType.ACTION, meta); 
+    Log($"{executor.PlayerName} changed the mode to {mode}", LogType.MODE, meta); 
     public void Map(CCSPlayerController executor, string map, Dictionary<string, object>? meta = null) =>
-        Log($"{executor.PlayerName} changed the map to {map}", LogType.ACTION, meta); 
+        Log($"{executor.PlayerName} changed the map to {map}", LogType.MAP, meta); 
 }
