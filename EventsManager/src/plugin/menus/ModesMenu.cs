@@ -15,6 +15,7 @@ public class ModesMenu : PaginatedMenuBase
 {
     private readonly IEventsManager _plugin;
     private readonly IGameModeService _gameModeService;
+    private readonly IServerStateService _serverStateService;
     private readonly IAnnouncerService _announcerService;
     private readonly ILoggerService _loggerService;
     private readonly CCSPlayerController _player;
@@ -23,10 +24,11 @@ public class ModesMenu : PaginatedMenuBase
         : base(plugin, player, header, parent)
     {
         _gameModeService = plugin.GetGameModesService();
+        _serverStateService = plugin.GetServerStateService();
         _announcerService = plugin.GetAnnouncerService();
         _loggerService = plugin.GetLoggerService();
         _plugin = plugin;
-        this._player = player;
+        _player = player;
         SetItems((_gameModeService.GetAll() ?? throw new InvalidOperationException()).OrderBy(x => x));
     }
     protected override MenuItem CreateMenuItem(string item)
@@ -42,7 +44,7 @@ public class ModesMenu : PaginatedMenuBase
         {
             _announcerService.Announce(_player.PlayerName, selected, "has changed the mode to", ".", "lightpurple");
             _loggerService.Mode(_player, selected);
-            //TODO: Update State
+            _serverStateService.UpdateModeAsync(selected);
         }
         _player.PrintLocalizedChat(_plugin.GetBase().Localizer, "error_try_again", "Mode Activation Failed");
     }

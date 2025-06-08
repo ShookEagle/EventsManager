@@ -25,9 +25,15 @@ public class ServerStateService(IWebService api, IEventsManager plugin) : IServe
         return true;
     }
 
-    public async Task<bool> UpdateAsync(string mode, string map)
+    public async Task<bool> UpdateModeAsync(string mode)
     {
         State.Mode = mode;
+        State.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        return await api.PostAsync("state.php", State);
+    }
+    
+    public async Task<bool> UpdateMapAsync(string map)
+    {
         State.Map = map;
         State.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         return await api.PostAsync("state.php", State);
