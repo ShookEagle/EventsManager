@@ -1,7 +1,7 @@
 using CounterStrikeSharp.API.Modules.Commands;
 using CounterStrikeSharp.API.Modules.Utils;
+using EventsManager.maul.enums;
 using EventsManager.plugin.utils;
-using MAULActainShared.maul.enums;
 using Microsoft.Extensions.Localization;
 
 namespace EventsManager.plugin.extensions;

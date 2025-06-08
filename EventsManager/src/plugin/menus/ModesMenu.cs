@@ -1,7 +1,9 @@
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Entities;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
+using EventsManager.plugin.extensions;
 using EventsManager.plugin.menus.components;
 using EventsManager.plugin.menus.style;
 using RMenu;
@@ -11,12 +13,20 @@ namespace EventsManager.plugin.menus;
 
 public class ModesMenu : PaginatedMenuBase
 {
-    private IGameModeService _gameModeService;
+    private readonly IEventsManager _plugin;
+    private readonly IGameModeService _gameModeService;
+    private readonly IAnnouncerService _announcerService;
+    private readonly ILoggerService _loggerService;
+    private readonly CCSPlayerController _player;
     
     public ModesMenu(IEventsManager plugin, CCSPlayerController player, MenuValue[] header, MenuBase? parent = null) 
         : base(plugin, player, header, parent)
     {
         _gameModeService = plugin.GetGameModesService();
+        _announcerService = plugin.GetAnnouncerService();
+        _loggerService = plugin.GetLoggerService();
+        _plugin = plugin;
+        this._player = player;
         SetItems((_gameModeService.GetAll() ?? throw new InvalidOperationException()).OrderBy(x => x));
     }
     protected override MenuItem CreateMenuItem(string item)
@@ -28,6 +38,12 @@ public class ModesMenu : PaginatedMenuBase
 
     protected override void OnItemSelected(string selected)
     {
-        Server.PrintToChatAll($"Selected {selected}");
+        if (_gameModeService.SetActive(selected))
+        {
+            _announcerService.Announce(_player.PlayerName, selected, "has changed the mode to", ".", "lightpurple");
+            _loggerService.Mode(_player, selected);
+            //TODO: Update State
+        }
+        _player.PrintLocalizedChat(_plugin.GetBase().Localizer, "error_try_again", "Mode Activation Failed");
     }
 }

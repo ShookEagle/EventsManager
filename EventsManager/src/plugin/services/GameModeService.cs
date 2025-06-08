@@ -1,6 +1,4 @@
-using System.Text.Json;
 using CounterStrikeSharp.API;
-using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.models;
 using Microsoft.Extensions.Logging;
@@ -100,6 +98,8 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
             if (section == null) return;
             foreach (var (key, value) in section)
             {
+                if (value == null) continue;
+                
                 var arg = value switch
                 {
                     string s => $"\"{s}\"",

@@ -1,8 +1,8 @@
 using CounterStrikeSharp.API;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
+using EventsManager.maul.enums;
 using EventsManager.plugin.extensions;
-using MAULActainShared.maul.enums;
 
 namespace EventsManager.plugin.services;
 
