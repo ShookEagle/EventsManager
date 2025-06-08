@@ -2,10 +2,11 @@ using CounterStrikeSharp.API;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.models;
+using Microsoft.Extensions.Logging;
 
 namespace EventsManager.plugin.services;
 
-public class ServerStateService(IWebService api, IEventsManager plugin) : IServerStateService
+public class ServerStateService(IWebService api, EventsManager plugin) : IServerStateService
 {
     private ServerState State { get; set; } = new();
 
@@ -14,7 +15,11 @@ public class ServerStateService(IWebService api, IEventsManager plugin) : IServe
         State.Mode = plugin.GetGameModesService().GetActiveString();
         State.Map = Server.MapName;
         State.UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        return await api.PostAsync("state.php", State);
+        
+        var success = await api.PostAsync("state.php", State);
+        if (!success) return false;
+        plugin.Logger.LogInformation("[STATE] Successfully Sent Server State");
+        return true;
     }
     
     public async Task<bool> LoadAsync()
