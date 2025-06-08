@@ -18,7 +18,7 @@ public class ServerStateService(IWebService api, EventsManager plugin) : IServer
         
         var success = await api.PostAsync("state.php", State);
         if (!success) return false;
-        plugin.Logger.LogInformation("[STATE] Successfully Sent Server State");
+        plugin.Logger.LogInformation("[STATE] Successfully sent server state.");
         return true;
     }
     
