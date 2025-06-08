@@ -9,6 +9,8 @@ namespace EventsManager.plugin.menus;
 
 public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBase(plugin ,player, [new MenuValue("EC Menu", Color.Blue)])
 {
+    private readonly IEventsManager _plugin = plugin;
+
     protected override void Build()
     {
         Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue("Modes")));
@@ -24,7 +26,7 @@ public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBa
         switch (menu.SelectedItem?.Index)
         {
             case 0:
-                new ModesMenu(plugin, player, [new MenuValue("EC Menu", Color.Blue)], Menu).Show();
+                new ModesMenu(_plugin, player, [new MenuValue("EC Menu", Color.Blue)], Menu).Show();
                 break;
         }
     }

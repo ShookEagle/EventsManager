@@ -15,6 +15,8 @@ public class LoggerService(IEventsManager plugin) : ILoggerService
     
     private void Log(string message, LogType type = LogType.INFO, Dictionary<string, object>? meta = null)
     {
+        meta ??= new Dictionary<string, object> { { "none", "none" } };
+        
         var entry = new LogEntry
         {
             Type = type.ToString(),
