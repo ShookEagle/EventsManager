@@ -1,3 +1,4 @@
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Capabilities;
 using EventsManager.api.plugin;
@@ -44,7 +45,7 @@ public class EventsManager : BasePlugin, IEventsManager
     public IAnnouncerService GetAnnouncerService() { return _announcerService!; }
     public ILoggerService GetLoggerService() { return _loggerService!; }
     
-    public override async void Load(bool hotReload)
+    public override void Load(bool hotReload)
     {
         _webService         = new WebService(new HttpClient(), this);
         _mapGroupService    = new MapGroupService(_webService, this);
@@ -56,10 +57,10 @@ public class EventsManager : BasePlugin, IEventsManager
 
         LoadCommands();
         
-        await _mapGroupService.LoadAsync();
-        await _commandPackService.LoadAsync();
-        await _gameModesService.LoadAsync();
-        await _serverStateService.PushInitialStateAsync();
+        _mapGroupService.LoadAsync().GetAwaiter().GetResult();
+        _commandPackService.LoadAsync().GetAwaiter().GetResult();
+        _gameModesService.LoadAsync().GetAwaiter().GetResult();
+        _serverStateService.PushInitialStateAsync().GetAwaiter().GetResult();
     }
     
     private void LoadCommands()
