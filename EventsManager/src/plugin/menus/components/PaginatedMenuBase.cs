@@ -14,8 +14,8 @@ public abstract class PaginatedMenuBase(
     MenuBase? parent = null)
     : RMenuBase(plugin, player, header, parent)
 {
-    protected List<string> Items { get; set; } = [];
-    protected int PageSize { get; } = 5;
+    private List<string> Items { get; set; } = [];
+    private int PageSize { get; } = 5;
     private int _currentPage = 1;
 
     protected void SetItems(IEnumerable<string> items)
@@ -24,13 +24,9 @@ public abstract class PaginatedMenuBase(
         _currentPage = 1;
     }
 
-    protected override void Build()
+    private void Update()
     {
-        for (var i = 0; i < PageSize; i++)
-            Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue("Loading...")));
         
-        Menu.AddItem(new MenuItem(MenuItemType.Choice, "Page: ", GetPageChoices()));
-        Update();
     }
 
     protected override void OnAction(CCSPlayerController player, MenuBase menu, MenuAction action)
@@ -43,7 +39,7 @@ public abstract class PaginatedMenuBase(
             var pageData = menu.SelectedItem?.Item?.SelectedValue?.Value?.Data;
             if (pageData is not int page || page <= 0 || page > TotalPages) return;
             _currentPage = page;
-            Update();
+            Build();
             return;
         }
 
@@ -53,8 +49,8 @@ public abstract class PaginatedMenuBase(
         if (index >= 0 && index < Items.Count)
             OnItemSelected(Items[index]);
     }
-    
-    protected void Update()
+
+    protected override void Build()
     {
         Menu.Items.Clear();
 
@@ -62,7 +58,7 @@ public abstract class PaginatedMenuBase(
         var end = Math.Min(start + PageSize, Items.Count);
 
         for (var i = start; i < end; i++)
-            Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue(Items[i])));
+            Menu.AddItem(CreateMenuItem(Items[i]));
 
         // Add pagination control at the end
         var pages = new List<MenuValue>();
@@ -75,15 +71,6 @@ public abstract class PaginatedMenuBase(
         };
 
         Menu.AddItem(pageChoice);
-    }
-
-    private List<MenuValue> GetPageChoices()
-    {
-        var count = TotalPages;
-        var values = new List<MenuValue>();
-        for (var i = 1; i <= count; i++)
-        { values.Add(new MenuValue($"{i}", Theme.AccentBlue, data: i)); }
-        return values;
     }
 
     private int TotalPages => Math.Max(1, (int)Math.Ceiling((double)Items.Count / PageSize));
