@@ -23,6 +23,7 @@ public class EventsManager : BasePlugin, IEventsManager
     private IMapGroupService? _mapGroupService;
     private ICommandPackService? _commandPackService;
     private IGameModeService? _gameModesService;
+    private IServerStateService? _serverStateService;
     private IAnnouncerService? _announcerService;
     private ILoggerService? _loggerService;
 
@@ -37,6 +38,7 @@ public class EventsManager : BasePlugin, IEventsManager
     public IMapGroupService GetMapGroupService() { return _mapGroupService!; }
     public ICommandPackService GetCommandPackService() { return _commandPackService!; }
     public IGameModeService GetGameModesService() { return _gameModesService!; }
+    public IServerStateService GetServerStateService() { return _serverStateService!; }
     public IAnnouncerService GetAnnouncerService() { return _announcerService!; }
     public ILoggerService GetLoggerService() { return _loggerService!; }
     
@@ -46,6 +48,7 @@ public class EventsManager : BasePlugin, IEventsManager
         _mapGroupService    = new MapGroupService(_webService, this);
         _commandPackService = new CommandPackService(_webService, this);
         _gameModesService   = new GameModeService(_webService, this);
+        _serverStateService = new ServerStateService(_webService, this);
         _announcerService   = new AnnouncerService(this);
         _loggerService      = new LoggerService(this);
 
@@ -54,6 +57,7 @@ public class EventsManager : BasePlugin, IEventsManager
         await _mapGroupService.LoadAsync();
         await _commandPackService.LoadAsync();
         await _gameModesService.LoadAsync();
+        await _serverStateService.PushInitialStateAsync();
     }
     
     private void LoadCommands()
