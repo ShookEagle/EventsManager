@@ -28,7 +28,10 @@ public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBa
         switch (menu.SelectedItem?.Index)
         {
             case 0:
-                new ModesMenu(_plugin, player, [new MenuValue("EC Menu", Color.Blue)], this).Show();
+                new ModesMenu(_plugin, player, [new MenuValue("Modes", Color.Blue)], this).Show();
+                break;
+            case 1:
+                new MapsMenu(_plugin, player, [new MenuValue("Maps", Color.Blue)], this).Show();
                 break;
         }
     }

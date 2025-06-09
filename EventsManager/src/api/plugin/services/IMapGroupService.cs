@@ -7,4 +7,5 @@ public interface IMapGroupService
     Task<bool> LoadAsync();
     void SetActiveGroup(string groupName);
     MapGroup? GetActiveGroup();
+    void SwitchMap(string mapName);
 }

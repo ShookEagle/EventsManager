@@ -1,3 +1,4 @@
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.models;
@@ -30,4 +31,12 @@ public class MapGroupService(IWebService api, BasePlugin plugin) : IMapGroupServ
     }
 
     public MapGroup? GetActiveGroup() => MapGroups.TryGetValue(ActiveGroup, out var group) ? group : null;
+
+    public void SwitchMap(string mapName)
+    {
+        var mapId = GetActiveGroup()?.FirstOrDefault(m => m.Name.Equals(mapName))?.WorkshopId;
+        if (mapId != "") 
+            Server.ExecuteCommand($"host_workshop_map {mapId}");
+        Server.ExecuteCommand($"changelevel {mapName}");
+    }
 }
