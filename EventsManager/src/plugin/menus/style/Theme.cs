@@ -16,7 +16,6 @@ public static class Theme
     public static readonly Color AccentGreen        = Color.FromArgb(59, 165, 93);      // #3ba55d
     public static readonly Color AccentRed          = Color.FromArgb(255, 102, 102);    // #ff6666
     public static readonly Color AccentDarkRed      = Color.FromArgb(255, 51, 51);      // #ff3333
-
-    public static readonly MenuOptions SubItemFont  = new() { ItemFontSize = MenuFontSize.SM };
+    
     public static readonly MenuItem BlankItem       = new(MenuItemType.Text, new MenuValue("Empty", TextDark));
 }

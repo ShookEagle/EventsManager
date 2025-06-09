@@ -20,7 +20,7 @@ public class ModesMenu : PaginatedMenuBase
     private readonly ILoggerService _loggerService;
     private readonly CCSPlayerController _player;
     
-    public ModesMenu(IEventsManager plugin, CCSPlayerController player, MenuValue[] header, MenuBase? parent = null) 
+    public ModesMenu(IEventsManager plugin, CCSPlayerController player, MenuValue[] header, RMenuBase? parent = null) 
         : base(plugin, player, header, parent)
     {
         _gameModeService = plugin.GetGameModesService();

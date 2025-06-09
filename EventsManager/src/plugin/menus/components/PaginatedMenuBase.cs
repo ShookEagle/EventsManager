@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using EventsManager.api.plugin;
@@ -11,12 +12,14 @@ public abstract class PaginatedMenuBase(
     IEventsManager plugin,
     CCSPlayerController player,
     MenuValue[] header,
-    MenuBase? parent = null)
+    RMenuBase? parent)
     : RMenuBase(plugin, player, header, parent)
 {
     private List<string> Items { get; set; } = [];
-    private int PageSize { get; } = 5;
+    private int PageSize { get; } = 4;
     private int _currentPage = 1;
+    private readonly IEventsManager _plugin = plugin;
+    private readonly CCSPlayerController _player = player;
 
     protected void SetItems(IEnumerable<string> items)
     {
@@ -52,6 +55,7 @@ public abstract class PaginatedMenuBase(
         }
 
         if (action != MenuAction.Select) return;
+        if (menu.SelectedItem?.Index == PageSize + 1) { GoBack(); return; }
 
         var index = (_currentPage - 1) * PageSize + (menu.SelectedItem?.Index ?? -1);
         if (index >= 0 && index < Items.Count)
@@ -71,6 +75,7 @@ public abstract class PaginatedMenuBase(
         { SelectedValue = (_currentPage - 1, pages[_currentPage - 1]) };
 
         Menu.AddItem(pageChoice);
+        Menu.AddItem(new MenuItem(MenuItemType.Button, new MenuValue("Back", Theme.AccentDarkRed)));
     }
 
     private int TotalPages => Math.Max(1, (int)Math.Ceiling((double)Items.Count / PageSize));
