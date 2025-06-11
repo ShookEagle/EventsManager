@@ -33,6 +33,9 @@ public class EcMenu(IEventsManager plugin, CCSPlayerController player) : RMenuBa
             case 1:
                 new MapsMenu(_plugin, player, [new MenuValue("Maps", Color.Blue)], this).Show();
                 break;
+            case 2:
+                new SettingsMenu(_plugin, player, [new MenuValue("Settings", Color.Blue)], this).Show();
+                break;
         }
     }
 }
