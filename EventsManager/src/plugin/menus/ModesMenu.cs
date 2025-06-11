@@ -47,5 +47,6 @@ public class ModesMenu : PaginatedMenuBase
             _serverStateService.UpdateModeAsync(selected);
         }
         _player.PrintLocalizedChat(_plugin.GetBase().Localizer, "error_try_again", "Mode Activation Failed");
+        base.OnItemSelected(selected);
     }
 }

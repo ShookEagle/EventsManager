@@ -80,5 +80,6 @@ public abstract class PaginatedMenuBase(
 
     private int TotalPages => Math.Max(1, (int)Math.Ceiling((double)Items.Count / PageSize));
     protected abstract MenuItem CreateMenuItem(string item);
-    protected abstract void OnItemSelected(string selected);
+
+    protected virtual void OnItemSelected(string selected) { UpdateItems(); }
 }

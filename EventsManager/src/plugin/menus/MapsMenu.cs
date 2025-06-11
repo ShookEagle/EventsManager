@@ -45,5 +45,6 @@ public class MapsMenu : PaginatedMenuBase
         _plugin.GetBase().AddTimer(3f, () =>
         { _mapGroupService.SwitchMap(selected);
         }, TimerFlags.STOP_ON_MAPCHANGE);
+        base.OnItemSelected(selected);
     }
 }
