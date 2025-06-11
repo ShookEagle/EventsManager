@@ -19,3 +19,9 @@ public static class Theme
     
     public static readonly MenuItem BlankItem       = new(MenuItemType.Text, new MenuValue("Empty", TextDark));
 }
+
+public static class ThemeExtensions
+{
+    private static string ToHex(this Color color) => $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+    public static string ToHtmlColor(this Color color) => $"<font color=\"{color.ToHex()}\">";
+}
