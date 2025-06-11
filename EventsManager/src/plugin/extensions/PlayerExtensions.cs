@@ -10,7 +10,7 @@ public static class PlayerExtensions
 {
     public static void PrintLocalizedChat(this CCSPlayerController? controller,
         IStringLocalizer localizer, string local, params object[] args) {
-        if (controller == null || !controller.IsReal(false)) return;
+        if (controller == null || !controller.IsReal()) return;
         string message = localizer[local, args];
         message = message.Replace("%prefix%", localizer["prefix"]);
         message = StringUtils.ReplaceChatColors(message);
