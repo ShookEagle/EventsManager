@@ -10,4 +10,5 @@ public interface ICommandPackService
     void Toggle(string name);
     void DisableAll();
     bool IsActive(string name);
+    List<string> GetAll();
 }

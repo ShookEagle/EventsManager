@@ -8,8 +8,8 @@ namespace EventsManager.plugin.services;
 
 public class CommandPackService(IWebService api, EventsManager plugin) : ICommandPackService
 {
-    public Dictionary<string, CommandPack> CommandPacks { get; private set; } = new();
-    public HashSet<string> ActivePacks { get; } = [];
+    private Dictionary<string, CommandPack> CommandPacks { get; set; } = new();
+    private HashSet<string> ActivePacks { get; } = [];
     
     public async Task<bool> LoadAsync()
     {
@@ -71,4 +71,5 @@ public class CommandPackService(IWebService api, EventsManager plugin) : IComman
     }
 
     public bool IsActive(string name) => ActivePacks.Contains(name);
+    public List<string> GetAll() => CommandPacks.Keys.ToList();
 }
