@@ -4,9 +4,10 @@ namespace EventsManager.plugin.utils;
 
 internal class ChatColorUtils {
   public static readonly char[] AVAILABLE_COLORS = {
-    ChatColors.White, ChatColors.Green, ChatColors.Yellow, ChatColors.Olive,
-    ChatColors.Lime, ChatColors.LightPurple, ChatColors.Purple, ChatColors.Grey,
-    ChatColors.Gold, ChatColors.Silver, ChatColors.DarkBlue
+    ChatColors.White, ChatColors.DarkRed, ChatColors.Green, ChatColors.Yellow,
+    ChatColors.Olive, ChatColors.Lime, ChatColors.Red, ChatColors.LightPurple,
+    ChatColors.Purple, ChatColors.Grey, ChatColors.Gold, ChatColors.Silver,
+    ChatColors.Blue, ChatColors.DarkBlue, ChatColors.LightRed
   };
 
   public static readonly char[] ALL_COLORS = {

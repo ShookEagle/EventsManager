@@ -1,4 +1,5 @@
 using CounterStrikeSharp.API.Core;
+using CounterStrikeSharp.API.Modules.Utils;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.extensions;
@@ -48,7 +49,7 @@ public class PlayerStateListener
         if (player == null || !player.IsReal()) return HookResult.Continue;
 
         var state = _playerStateService.GetOrCreate(player);
-        state.Team = player.Team.ToString();
+        state.Team = ((CsTeam)@event.Team).ToString();
         
         _playerStateService.SchedulePush();
         return HookResult.Continue;

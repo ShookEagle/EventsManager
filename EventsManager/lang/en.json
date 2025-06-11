@@ -3,5 +3,5 @@
   "error": "%prefix%{darkred}Error: {lightred}{0}. {white}Please contact ShookEagle.",
   "error_try_again": "%prefix%{darkred}Error: {lightred}{0}. {grey}Please try again, {white}if the problem persists{grey}, contact ShookEagle.",
   "no_permission": "%prefix%{red}This requires the {white}{0}{red} {1}.",
-  "admin_action_format": "%prefix%{blue}{0} {bluegrey}{1} {{2}}{3} {bluegrey}{4}."
+  "admin_action_format": "%prefix%{blue}{0} {bluegrey}{1} {2}{3} {bluegrey}{4}."
 }

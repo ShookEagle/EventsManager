@@ -1,12 +1,16 @@
+using System.Globalization;
 using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Capabilities;
+using CounterStrikeSharp.API.Core.Translations;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.commands;
+using EventsManager.plugin.extensions;
 using EventsManager.plugin.listeners;
 using EventsManager.plugin.services;
 using MAULActainShared.plugin;
+using Microsoft.Extensions.Logging;
 
 
 namespace EventsManager.plugin;
@@ -62,8 +66,6 @@ public class EventsManager : BasePlugin, IEventsManager
         _ = new PlayerStateListener(this);
         
         LoadCommands();
-
-        foreach (var player in Utilities.GetPlayers()) _playerStateService.GetOrCreate(player);
         
         _mapGroupService.LoadAsync().GetAwaiter().GetResult();
         _commandPackService.LoadAsync().GetAwaiter().GetResult();
