@@ -4,6 +4,7 @@ using CounterStrikeSharp.API.Core.Capabilities;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.commands;
+using EventsManager.plugin.listeners;
 using EventsManager.plugin.services;
 using MAULActainShared.plugin;
 
@@ -58,6 +59,8 @@ public class EventsManager : BasePlugin, IEventsManager
         _announcerService   = new AnnouncerService(this);
         _loggerService      = new LoggerService(this);
 
+        _ = new PlayerStateListener(this);
+        
         LoadCommands();
 
         foreach (var player in Utilities.GetPlayers()) _playerStateService.GetOrCreate(player);
