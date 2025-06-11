@@ -10,4 +10,5 @@ public interface ILoggerService
     void Action(string message, Dictionary<string, object>? meta = null);
     void Mode(CCSPlayerController executor, string mode, Dictionary<string, object>? meta = null);
     void Map(CCSPlayerController executor, string map, Dictionary<string, object>? meta = null);
+    void Settings(CCSPlayerController executor, string setting, bool toggle, Dictionary<string, object>? meta = null);
 }

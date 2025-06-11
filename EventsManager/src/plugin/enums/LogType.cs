@@ -10,6 +10,7 @@ public enum LogType
     ACTION  = 4,
     MODE    = 5,
     MAP     = 6,
+    SETTING = 7
 }
 
 public static class LogTypeExtensions {
@@ -21,6 +22,7 @@ public static class LogTypeExtensions {
             LogType.ACTION  => "ACTION",
             LogType.MODE    => "MODE",
             LogType.MAP     => "MAP",
+            LogType.SETTING => "SETTING",
             _               => "INFO"
         };
     }
