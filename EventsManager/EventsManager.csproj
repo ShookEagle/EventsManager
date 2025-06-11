@@ -19,7 +19,9 @@
             <HintPath>./shared/RMenu.dll</HintPath>
         </Reference>
     </ItemGroup>
-
+    <ItemGroup>
+        <None Update="lang\**\*.*" CopyToOutputDirectory="PreserveNewest" />
+    </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="D:\devserver\game\csgo\addons\counterstrikesharp\plugins\EventsManager\" />
     </Target>
