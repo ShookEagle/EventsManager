@@ -26,6 +26,7 @@ public class EventsManager : BasePlugin, IEventsManager
     private ICommandPackService? _commandPackService;
     private IGameModeService? _gameModesService;
     private IServerStateService? _serverStateService;
+    private IPlayerStateService? _playerStateService;
 #pragma warning restore CA1859
     private IAnnouncerService? _announcerService;
     private ILoggerService? _loggerService;
@@ -42,6 +43,7 @@ public class EventsManager : BasePlugin, IEventsManager
     public ICommandPackService GetCommandPackService() { return _commandPackService!; }
     public IGameModeService GetGameModesService() { return _gameModesService!; }
     public IServerStateService GetServerStateService() { return _serverStateService!; }
+    public IPlayerStateService GetPlayerStateService() { return _playerStateService!;}
     public IAnnouncerService GetAnnouncerService() { return _announcerService!; }
     public ILoggerService GetLoggerService() { return _loggerService!; }
     
@@ -52,15 +54,20 @@ public class EventsManager : BasePlugin, IEventsManager
         _commandPackService = new CommandPackService(_webService, this);
         _gameModesService   = new GameModeService(_webService, this);
         _serverStateService = new ServerStateService(_webService, this);
+        _playerStateService = new PlayerStateService(_webService, this);
         _announcerService   = new AnnouncerService(this);
         _loggerService      = new LoggerService(this);
 
         LoadCommands();
+
+        foreach (var player in Utilities.GetPlayers().Where(p => !p.IsBot))
+            _playerStateService.GetOrCreate(player);
         
         _mapGroupService.LoadAsync().GetAwaiter().GetResult();
         _commandPackService.LoadAsync().GetAwaiter().GetResult();
         _gameModesService.LoadAsync().GetAwaiter().GetResult();
         _serverStateService.PushInitialStateAsync().GetAwaiter().GetResult();
+        _playerStateService.PushAsync().GetAwaiter().GetResult();
     }
     
     private void LoadCommands()
