@@ -8,9 +8,11 @@ namespace EventsManager.plugin.commands;
 
 public class EcMenuCmd(IEventsManager plugin) : Command(plugin)
 {
+    private readonly IEventsManager _plugin = plugin;
+
     public override void OnCommand(CCSPlayerController? executor, CommandInfo info)
     {
         if (executor == null || !executor.IsReal()) return;
-        new EcMenu(plugin, executor).Show();
+        new EcMenu(_plugin, executor).Show();
     }
 }

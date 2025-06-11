@@ -60,8 +60,7 @@ public class EventsManager : BasePlugin, IEventsManager
 
         LoadCommands();
 
-        foreach (var player in Utilities.GetPlayers().Where(p => !p.IsBot))
-            _playerStateService.GetOrCreate(player);
+        foreach (var player in Utilities.GetPlayers()) _playerStateService.GetOrCreate(player);
         
         _mapGroupService.LoadAsync().GetAwaiter().GetResult();
         _commandPackService.LoadAsync().GetAwaiter().GetResult();
