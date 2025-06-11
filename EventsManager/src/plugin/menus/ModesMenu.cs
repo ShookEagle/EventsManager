@@ -42,7 +42,7 @@ public class ModesMenu : PaginatedMenuBase
     {
         if (_gameModeService.SetActive(selected))
         {
-            _announcerService.Announce(_player.PlayerName, selected, "has changed the mode to", ".", "lightpurple");
+            _announcerService.Announce(_player.PlayerName, selected, "has changed the mode to", "", "lightpurple");
             _loggerService.Mode(_player, selected);
             _serverStateService.UpdateModeAsync(selected);
         }

@@ -39,7 +39,7 @@ public class MapsMenu : PaginatedMenuBase
 
     protected override void OnItemSelected(string selected)
     {
-        _announcerService.Announce(_player.PlayerName, selected, "has changed the map to", ". Changing in 3 seconds.", "yellow");
+        _announcerService.Announce(_player.PlayerName, selected, "has changed the map to", ". Changing in 3 seconds", "yellow");
         _loggerService.Map(_player, selected);
         _serverStateService.UpdateMapAsync(selected);
         _plugin.GetBase().AddTimer(3f, () =>

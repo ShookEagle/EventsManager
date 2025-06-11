@@ -1,3 +1,4 @@
+using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
@@ -40,7 +41,7 @@ public class SettingsMenu : PaginatedMenuBase
     {
         _commandPackService.Toggle(selected);
         var isActive = _commandPackService.IsActive(selected);
-        _announcerService.Announce(_player.PlayerName, selected, isActive ? "enabled" : "disabled", ".", 
+        _announcerService.Announce(_player.PlayerName, selected, isActive ? "enabled" : "disabled", "", 
             isActive ? "lime" : "lightred");
         _loggerService.Settings(_player, selected, isActive);
         base.OnItemSelected(selected);
