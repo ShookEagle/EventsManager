@@ -7,19 +7,19 @@ namespace EventsManager.plugin.services;
 
 public class PlayerStateService(IWebService api, EventsManager plugin) : IPlayerStateService
 {
-    private readonly Dictionary<ulong, PlayerState> _playerStates = new();
+    private readonly Dictionary<int, PlayerState> _playerStates = new();
     
     public PlayerState GetOrCreate(CCSPlayerController player)
     {
-        if (_playerStates.TryGetValue(player.SteamID, out var state)) return state;
-        state = new PlayerState(player.SteamID, player.PlayerName);
-        _playerStates[player.SteamID] = state;
+        if (_playerStates.TryGetValue(player.Slot, out var state)) return state;
+        state = new PlayerState(player);
+        _playerStates[player.Slot] = state;
 
         return state;
     }
 
-    public bool TryGet(ulong steamId, out PlayerState? state) => _playerStates.TryGetValue(steamId, out state);
-    public void Remove(ulong steamId) => _playerStates.Remove(steamId);
+    public bool TryGet(int slot, out PlayerState? state) => _playerStates.TryGetValue(slot, out state);
+    public void Remove(int slot) => _playerStates.Remove(slot);
     public IEnumerable<PlayerState> GetAll() => _playerStates.Values;
 
     public async Task<bool> PushAsync()

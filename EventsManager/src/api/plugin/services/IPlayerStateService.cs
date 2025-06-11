@@ -6,8 +6,8 @@ namespace EventsManager.api.plugin.services;
 public interface IPlayerStateService
 {
     PlayerState GetOrCreate(CCSPlayerController player);
-    bool TryGet(ulong steamId, out PlayerState? state);
-    void Remove(ulong steamId);
+    bool TryGet(int slot, out PlayerState? state);
+    void Remove(int slot);
     IEnumerable<PlayerState> GetAll();
     Task<bool> PushAsync();
 }
