@@ -2,7 +2,7 @@ namespace EventsManager.maul.enums;
 
 public static class Extensions
 {
-    public static string ToString(this MaulPermission permission)
+    public static string ToHandleableString(this MaulPermission permission)
     {
         return permission switch
         {

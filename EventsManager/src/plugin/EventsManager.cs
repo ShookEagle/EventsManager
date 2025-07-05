@@ -72,6 +72,8 @@ public class EventsManager : BasePlugin, IEventsManager
         _gameModesService.LoadAsync().GetAwaiter().GetResult();
         _serverStateService.PushInitialStateAsync().GetAwaiter().GetResult();
         _playerStateService.PushAsync().GetAwaiter().GetResult();
+        
+        
     }
     
     private void LoadCommands()
