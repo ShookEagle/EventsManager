@@ -68,46 +68,29 @@ public class GameModeService(IWebService api, EventsManager plugin) : IGameModeS
         foreach (var cmd in commands)
             Server.ExecuteCommand(cmd);
         
-        if (mode.Settings.CustomCommands != null)
-            foreach (var cmd in mode.Settings.CustomCommands.OfType<string>())
-                Server.ExecuteCommand(cmd);
-        
         // 4. Load Plugins 
-        if (mode.Plugins != null)
-            foreach (var path in mode.Plugins)
-                Server.ExecuteCommand($"css_plugins load \"plugins/disabled/{path}\"");
+        if (mode.Plugins == null) return;
+        foreach (var path in mode.Plugins)
+            Server.ExecuteCommand($"css_plugins load \"plugins/disabled/{path}\"");
     }
     
-    private static List<string> FlattenSettings(GameModeSettings? settings)
+    private static List<string> FlattenSettings(Dictionary<string, object?>? settings)
     {
         var result = new List<string>();
         if (settings is null) return result;
-
-        Merge(settings.Generic);
-        Merge(settings.Roundflow);
-        Merge(settings.Bots);
-        Merge(settings.Movement);
-        Merge(settings.Weapons);
-        Merge(settings.Players);
-        Merge(settings.Communication);
-
-        return result;
-
-        void Merge(Dictionary<string, object?>? section)
+        
+        foreach (var (key, value) in settings)
         {
-            if (section == null) return;
-            foreach (var (key, value) in section)
-            {
-                if (value == null) continue;
+            if (value == null) continue;
                 
-                var arg = value switch
-                {
-                    string s => $"\"{s}\"",
-                    int or float or double or bool => value.ToString()!,
-                    _ => $"\"{value}\""
-                };
-                result.Add($"{key} {arg}");
-            }
+            var arg = value switch
+            {
+                string s => $"\"{s}\"",
+                int or float or double or bool => value.ToString()!,
+                _ => $"\"{value}\""
+            };
+            result.Add($"{key} {arg}");
         }
+        return result;
     }
 }
