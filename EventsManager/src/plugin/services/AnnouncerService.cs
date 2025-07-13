@@ -14,7 +14,7 @@ public class AnnouncerService(IEventsManager plugin) : IAnnouncerService
     {
         foreach (var player in Utilities.GetPlayers().Where(player => player.IsReal()))
         {
-            Server.NextFrame(() => // I have zero fucking idea what is causing this to not run on main thread. ffs.
+            plugin.GetDispatcher().Enqueue(() =>
             {
                 player.PrintLocalizedChat(plugin.GetBase().Localizer, "admin_action_format",
                     player.GetRank() >= MaulPermission.EG ? admin : "EC",
@@ -22,7 +22,7 @@ public class AnnouncerService(IEventsManager plugin) : IAnnouncerService
                     "{" + actionColor + "}",
                     target,
                     suffix);
-            });
+            }); // why must cs# run everything off main-thread :c I feel like I'm working in Unity
         }
     }
 }
