@@ -20,15 +20,19 @@ public class LogsCmd(IEventsManager plugin) : Command(plugin)
             var response = await _api.GetAsync<List<LogEntry>>("logs.php");
             if (response == null)
             {
-                info.ReplyLocalized(Plugin.GetBase().Localizer, "error_try_again", "Failed to fetch logs");
+                plugin.GetDispatcher().Enqueue(() =>
+                {
+                    info.ReplyLocalized(Plugin.GetBase().Localizer, "error_try_again", "Failed to fetch logs");
+                });
                 return;
             }
             
-            await Server.NextFrameAsync(() => { }); // Guarantee Main Thread before calling any engine APIs
-            
-            executor.PrintToConsole($"--- Last {response.Count} Logs ---");
-            foreach (var entry in response)
-                executor.PrintToConsole($"[{entry.Type}] {entry.Message}");
+            plugin.GetDispatcher().Enqueue(() =>
+            {
+                executor.PrintToConsole($"--- Last {response.Count} Logs ---");
+                foreach (var entry in response)
+                    executor.PrintToConsole($"[{entry.Type}] {entry.Message}");
+            }); // Guarantee Main Thread before calling any engine APIs
         });
     }
 }
