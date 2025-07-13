@@ -1,17 +1,11 @@
-using System.Globalization;
-using CounterStrikeSharp.API;
 using CounterStrikeSharp.API.Core;
 using CounterStrikeSharp.API.Core.Capabilities;
-using CounterStrikeSharp.API.Core.Translations;
 using EventsManager.api.plugin;
 using EventsManager.api.plugin.services;
 using EventsManager.plugin.commands;
-using EventsManager.plugin.extensions;
 using EventsManager.plugin.listeners;
 using EventsManager.plugin.services;
 using MAULActainShared.plugin;
-using Microsoft.Extensions.Logging;
-
 
 namespace EventsManager.plugin;
 
@@ -25,8 +19,9 @@ public class EventsManager : BasePlugin, IEventsManager
     private static PluginCapability<IActain>? ActainCapability { get; } = new("maulactain:core");
     private readonly Dictionary<string, Command> _commands = new();
 
-    private IWebService? _webService;
 #pragma warning disable CA1859
+    private IMainThreadDispatcher? _dispatcher;
+    private IWebService? _webService;
     private IMapGroupService? _mapGroupService;
     private ICommandPackService? _commandPackService;
     private IGameModeService? _gameModesService;
@@ -43,6 +38,7 @@ public class EventsManager : BasePlugin, IEventsManager
 
     public BasePlugin GetBase() { return this; }
     public IActain GetActain() { return ActainCapability!.Get()!; }
+    public IMainThreadDispatcher GetDispatcher() { return _dispatcher!; }
     public IWebService GetWebService() { return _webService!; }
     public IMapGroupService GetMapGroupService() { return _mapGroupService!; }
     public ICommandPackService GetCommandPackService() { return _commandPackService!; }
@@ -54,6 +50,9 @@ public class EventsManager : BasePlugin, IEventsManager
     
     public override void Load(bool hotReload)
     {
+        _dispatcher         = new MainThreadDispatcher();
+        RegisterListener<Listeners.OnTick>(() => { _dispatcher.RunPending(); });
+        
         _webService         = new WebService(new HttpClient(), this);
         _mapGroupService    = new MapGroupService(_webService, this);
         _commandPackService = new CommandPackService(_webService, this);
@@ -72,8 +71,7 @@ public class EventsManager : BasePlugin, IEventsManager
         _gameModesService.LoadAsync().GetAwaiter().GetResult();
         _serverStateService.PushInitialStateAsync().GetAwaiter().GetResult();
         _playerStateService.PushAsync().GetAwaiter().GetResult();
-        
-        
+        _webService.Connect();
     }
     
     private void LoadCommands()

@@ -9,6 +9,7 @@ public interface IEventsManager : IPluginConfig<EventsManagerConfig>
 {
     BasePlugin GetBase();
     IActain GetActain();
+    IMainThreadDispatcher GetDispatcher();
     IWebService GetWebService();
     IMapGroupService GetMapGroupService();
     ICommandPackService GetCommandPackService();
